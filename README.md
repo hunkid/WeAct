@@ -1,4 +1,4 @@
-# weact
+# WeAct
 
 > A Vue.js project
 
