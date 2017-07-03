@@ -1,8 +1,7 @@
 <template>
   <section class="panel acting">
-    <h4>正在进行中</h4>
-  
-    <el-table :data="actingActs" style="width: 100%" border>
+    <h4>草稿</h4>
+    <el-table :data="draftActs" style="width: 100%" border>
       <el-table-column prop="serial" label="序号" width="80" align="center">
       </el-table-column>
       <el-table-column prop="name" label="名称">
@@ -14,7 +13,7 @@
           <el-button-group>
           <el-button type="primary">查看</el-button>
           <el-button type="primary">编辑<i class="el-icon-edit"></i></el-button>
-          <el-button type="primary">取消<i class="el-icon-close"></i></el-button>
+          <el-button type="primary">删除<i class="el-icon-close"></i></el-button>
           </el-button-group>
         </template>
       </el-table-column>
@@ -27,7 +26,7 @@
 export default {
   data () {
     return {
-      actingActs: [
+      draftActs: [
         {
           serial: 1,
           name: '夏季热销活动来啦！',
