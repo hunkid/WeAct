@@ -1,5 +1,6 @@
 <template>
   <section class="panel acting">
+    <newActBtn></newActBtn>
     <h4>正在进行中</h4>
   
     <el-table :data="actingActs" style="width: 100%" border>
@@ -24,6 +25,7 @@
 </template>
 
 <script>
+import newActBtn from './newActBtn'
 export default {
   data () {
     return {
@@ -40,6 +42,9 @@ export default {
         }
       ]
     }
+  },
+  components: {
+    newActBtn
   }
 }
 </script>

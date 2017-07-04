@@ -1,5 +1,6 @@
 <template>
   <section class="panel acting">
+    <newActBtn></newActBtn>
     <h4>草稿</h4>
     <el-table :data="draftActs" style="width: 100%" border>
       <el-table-column prop="serial" label="序号" width="80" align="center">
@@ -23,6 +24,7 @@
 </template>
 
 <script>
+import newActBtn from './newActBtn'
 export default {
   data () {
     return {
@@ -39,7 +41,11 @@ export default {
         }
       ]
     }
+  },
+  components: {
+    newActBtn
   }
+
 }
 </script>
 
