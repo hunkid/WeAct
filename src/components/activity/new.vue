@@ -16,7 +16,7 @@
         <el-time-picker type="fixed-time" placeholder="选择时间" v-model="form.date2" style="width: 100%;"></el-time-picker>
       </el-col>
     </el-form-item>
-    <el-form-item label="活动性质">
+    <el-form-item label="活动性质" prop="type">
       <el-checkbox-group v-model="form.type">
         <el-checkbox label="美食/餐厅线上活动" name="type"></el-checkbox>
         <el-checkbox label="大促销活动" name="type"></el-checkbox>
@@ -25,7 +25,7 @@
         <el-checkbox label="促销活动" name="type"></el-checkbox>
       </el-checkbox-group>
     </el-form-item>
-    <el-form-item label="活动规模">
+    <el-form-item label="活动规模" prop="size">
       <el-radio-group v-model="form.size">
         <el-radio label="<50人" name="type"></el-radio>
         <el-radio label="50-100人" name="type"></el-radio>
@@ -38,7 +38,7 @@
       <el-input type="textarea" v-model="form.desc"></el-input>
     </el-form-item>
     <el-form-item id="fromActBTG">
-      <el-button type="primary" @click="onSubmit">立即创建</el-button>
+      <el-button type="primary" @click="onSubmit('form')">立即创建</el-button>
       <el-button>取消</el-button>
     </el-form-item>
   </el-form>
@@ -85,15 +85,22 @@ export default {
         resource: [
           { required: true, message: '请选择活动资源', trigger: 'change' }
         ],
-        desc: [
-          { required: true, message: '请填写活动形式', trigger: 'blur' }
+        size: [
+          { required: true, message: '请选择活动规模', trigger: 'blur' }
         ]
       }
     }
   },
   methods: {
-    onSubmit () {
-      console.log('submit!')
+    onSubmit (formName) {
+      this.$refs[formName].validate((valid) => {
+        if (valid) {
+          alert('submit!')
+        } else {
+          console.log('error submit!!')
+          return false
+        }
+      })
     }
   }
 }
