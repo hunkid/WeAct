@@ -1,7 +1,6 @@
 <template>
   <section class="panel acting">
-    <h4>正在进行中</h4>
-  
+    <h4>垃圾箱</h4>
     <el-table :data="dustinActs" style="width: 100%" border>
       <el-table-column prop="serial" label="序号" width="80" align="center">
       </el-table-column>

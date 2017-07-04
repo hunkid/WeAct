@@ -10,16 +10,11 @@
       <span class="sidebar-title">我的活动</span>
       <el-menu default-active="/act/doing" class="el-menu-vertical-demo" theme="light" router="router">
         <el-menu-item index="/act/doing">进行中</el-menu-item>
-        <el-menu-item index="2">草稿箱</el-menu-item>
-        <el-menu-item index="3">垃圾箱</el-menu-item>
+        <el-menu-item index="/act/draft">草稿箱</el-menu-item>
+        <el-menu-item index="/act/garbage">垃圾箱</el-menu-item>
       </el-menu>
     </el-col>
     <div class="content clearfix">
-      <div class="add clearfix">
-        <el-button class="fr">新增活动
-          <i class="el-icon-plus"></i>
-        </el-button>
-      </div>
       <div class="content-main">
         <router-view></router-view>
       </div>
@@ -85,6 +80,7 @@ export default {
   min-width: $mainMinW;
   position: absolute;
   left: $sideBarMaxW;
+  padding-top: 80px;
   .empty {
     max-width: $sideBarMaxW;
     min-width: $sideBarMinW;
