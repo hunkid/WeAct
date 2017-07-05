@@ -10,9 +10,14 @@ import 'element-ui/lib/theme-default/index.css'
 
 import './assets/css/reset.css'
 import './assets/css/base.css'
+
+// 引入vue-resource
+import VueResource from 'vue-resource'
+
 Vue.config.productionTip = false
 
 Vue.use(ElementUi)
+Vue.use(VueResource)
 
 /* eslint-disable no-new */
 new Vue({
