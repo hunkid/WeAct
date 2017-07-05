@@ -100,7 +100,7 @@ export default {
   methods: {
     onSubmit (formName) {
       let formData = JSON.stringify(this.form)
-      this.$http.post('/:usr/acts', formData).then(
+      this.$http.post('/usr/acts', formData).then(
         res => {
           console.log(res)
         }

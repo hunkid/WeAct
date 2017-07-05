@@ -4,9 +4,14 @@
  * @date 17/7/5
  */
 
+function addNewActivity (req, res) {
+  console.log(req)
+}
+
 /**
- * @param {Koa} app
+ * @param {Express} app
  */
 module.exports = function (app) {
-
+  app.route('/usr/acts')
+    .get(addNewActivity)
 }
