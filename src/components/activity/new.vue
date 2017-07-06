@@ -39,7 +39,7 @@
       </el-radio-group>
     </el-form-item>
     <el-form-item label="活动形式" prop="formua">
-      <el-input type="textarea" v-model="form.desc"></el-input>
+      <el-input type="textarea" v-model="form.formua"></el-input>
     </el-form-item>
     <el-form-item id="fromActBTG">
       <el-button type="primary" @click="onSubmit('form')">立即创建</el-button>
@@ -64,7 +64,7 @@ export default {
         date1: '',
         date2: '',
         type: [],
-        desc: '',
+        formua: '',
         size: ''
       },
       rules: {
@@ -92,27 +92,31 @@ export default {
           { required: true, message: '请选择活动规模', trigger: 'blur' }
         ],
         formua: [
-          { required: true, message: '请输入活动形式', trigger: 'change' }
+          { required: true, message: '请输入活动形式', trigger: 'blur' }
         ]
       }
     }
   },
   methods: {
     onSubmit (formName) {
+      if (!this.formValidate(formName)) {
+        return false
+      }
       let formData = JSON.stringify(this.form)
       this.$http.post('/usr/acts', formData).then(
         res => {
-          console.log(res)
+          alert('新增成功') // TODO:可以用弹出框，以后再说；另外跳转页面
         }
       ).catch(
         res => {
-          console.log('false')
-          console.log(res)
+          alert('新增失败！') // TODO:可以用弹出框，以后再说
         }
       )
+    },
+    formValidate (formName) {
       this.$refs[formName].validate((valid) => {
         if (valid) {
-          alert('submit!')
+          return true
         } else {
           console.log('error submit!!')
           return false

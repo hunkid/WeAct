@@ -14,6 +14,8 @@ var webpackConfig = process.env.NODE_ENV === 'testing'
   ? require('./webpack.prod.conf')
   : require('./webpack.dev.conf')
 
+var bodyParser = require('body-parser')
+
 // default port where dev server listens for incoming traffic
 var port = process.env.PORT || config.dev.port
 // automatically open browser, if not set will be false
@@ -82,6 +84,16 @@ devMiddleware.waitUntilValid(() => {
 })
 
 var server = app.listen(port)
+
+/**
+ * 后端程序
+ */
+var appServer = require('../server/activity')
+app.use(bodyParser.urlencoded({ extended: false }))
+app.use(bodyParser.json())
+
+appServer(app)
+
 
 module.exports = {
   ready: readyPromise,
