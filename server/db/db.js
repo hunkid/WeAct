@@ -11,9 +11,5 @@ var option = {
   password: 'admin',
   database: 'WeAct'
 }
-var mongoose = require('mongoose')
-mongoose.connect(`monogodb://${option.host}:${option.port}/${option.database}`)
-var db = mongoose.connection
-db.on('error', console.error.bind(console, 'connection error:'))
 
-module.exports = mongoose
+module.exports = option
