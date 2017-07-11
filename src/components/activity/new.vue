@@ -101,7 +101,11 @@ export default {
           let formData = JSON.stringify(this.actform)
           this.$http.post('/usr/acts', formData).then(
             res => {
-              alert('新增成功') // TODO: 可以用弹出框，以后再说；另外跳转页面
+              if (res.body.status === 1) {
+                alert('新增成功') // TODO: 可以用弹出框，以后再说；另外跳转页面
+              } else {
+                alert('新增失败')
+              }
             }
           ).catch(
             res => {

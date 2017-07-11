@@ -89,11 +89,13 @@ var server = app.listen(port)
  * 后端程序
  */
 var appServer = require('../server/activity')
+var usrServer = require('../server/usr').dealUsr
+
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 
 appServer(app)
-
+usrServer(app)
 
 module.exports = {
   ready: readyPromise,

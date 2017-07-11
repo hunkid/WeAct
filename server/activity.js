@@ -4,7 +4,7 @@
  * @date 17/7/5
  */
 
-// var fData = require('./data')
+var fData = require('./data')
 var option = require('./db/db')
 var mongoose = require('mongoose')
 
@@ -71,8 +71,8 @@ var activityUtil = {
         console.error.bind(console, 'connection error:' + err)
         reject(err)
       })
-      db.on('open', function (err) {
-        resolve(err)
+      db.on('open', function () {
+        resolve()
       })
     })
     return promise
@@ -83,7 +83,7 @@ var activityUtil = {
     promise.then(function () {
       var act = new ActsDB({
         name: data.name,
-        usr: { // TODO: 要查找的
+        usr: { // TODO: 要查找的，如何引入嵌套？
           name: 'zhangsan',
           tel: '12345607894', // 电话号码
           gender: 'male', // 性别
@@ -99,7 +99,9 @@ var activityUtil = {
       act.save(function (err) {
         if (err) {
           console.error(err)
+          res.end(fData('no', false))
         } else {
+          res.end(fData('yes', true))
           console.log('suc')
         }
         db.close()
