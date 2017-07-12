@@ -17,7 +17,7 @@
             <input type="text"
                    name="login_name"
                    placeholder="邮件/电话号码"
-                   v-model="login.email"
+                   v-model="login.name"
                    class="span2">
           </div>
           <div class="password">
@@ -31,16 +31,6 @@
           <button class="login-btn btn"
                   type="button"
                   @click='doLogin'><span>登录</span></button>
-          <div class="login-control">
-            <span class="f-l checkbox"
-                  :class="{checked: checked === true}"
-                  @click="checked = !checked">
-  						<input type="checkbox" class="remember" checked="checked">
-  						<ins class="check"></ins>
-  					</span>
-            <span class="f-l">记住我</span>
-            <span class="f-r"><a href="#" class="forget-color">忘记密码</a></span>
-          </div>
         </form>
       </div>
       <div class="login-input"
@@ -53,7 +43,7 @@
             <span class="span1"><i class="fa fa-envelope-o"></i></span>
             <input type="email"
                    name="email"
-                   v-model="user.email"
+                   v-model="user.name"
                    id="email"
                    class="span2"
                    placeholder="邮件/电话号码">
@@ -90,22 +80,30 @@ export default {
   data () {
     return {
       user: {
-        email: '',
+        name: '',
         nickname: '',
         password: ''
       },
       login: {
-        email: '',
+        name: '',
         password: ''
       },
       isLogin: true
     }
   },
   methods: {
-    login () {
-
-    },
-    regist () {
+    doLogin () {
+      if (this.login.name && this.login.password) {
+        this.$http.post('/usr/login', this.login).then(function (res) {
+          if (res.body.status === 1) {
+            alert('登录成功') // TODO:应该有跳转的
+          } else {
+            alert(res.body.data)
+          }
+        }).catch(res => {
+          alert('登录失败')
+        })
+      }
     },
     change (loginway) {
       // this.$store.dispatch('changeLoginway', loginway)
@@ -126,7 +124,7 @@ export default {
         if (res.body.status === 1) {
           alert('注册成功') // 应该有跳转的
         } else {
-          alert('注册失败')
+          alert(res.body.data)
         }
       }).catch(res => {
         alert('注册失败')

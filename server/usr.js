@@ -34,24 +34,66 @@ var usrUtil = {
     })
     return promise
   },
-  addNewUsr (data, res) { // TODO:必须要根据查询有无再来判断是否添加
+  addNewUsr (data, res) {
     var promise = this.init()
     var UsrsModel = mongoose.model('USRs', UsrsSchema) // 创建对应DB model
     promise.then(function () {
-      var usr = new UsrsModel({
-        name: data.name,
-        nickname: data.nickname,
-        passwd: data.password
-      })
-      usr.save(function (err) {
+      UsrsModel.find({
+        name: data.name
+      }, function (err, doc) {
         if (err) {
           console.error(err)
-          res.end(fData('no', false))
+          return
+        }
+        if (doc.length) {
+          res.end(fData('该用户名已经存在！', false))
+          return
+        }
+        var usr = new UsrsModel({
+          name: data.name,
+          nickname: data.nickname,
+          passwd: data.password
+        })
+        usr.save(function (err) {
+          if (err) {
+            console.error(err)
+            res.end(fData('no', false))
+          } else {
+            res.end(fData('yes', true))
+            console.log('suc')
+          }
+          db.close()
+        })
+      })
+    }).catch(function (err) {
+      console.error('no:' + err)
+      res.end(fData('操作失败', false))
+    })
+  },
+  authUsr (data, res) {
+    var promise = this.init()
+    var UsrsModel = mongoose.model('USRs', UsrsSchema)
+    promise.then(function () {
+      UsrsModel.find({
+        name: data.name
+      }, function (err, doc) {
+        if (err) {
+          console.error(err)
+          res.end(fData('操作失败', false))
+          db.close()
+          return
+        }
+        if (!doc.length) {
+          res.end(fData('登录失败，用户名或密码不正确', false))
+          return
+        }
+        if (doc[0].passwd === data.password) {
+          res.end(fData('登录成功', true))
         } else {
-          res.end(fData('yes', true))
-          console.log('suc')
+          res.end(fData('登录失败，用户名或密码不正确', false))
         }
         db.close()
+        return
       })
     }).catch(function (err) {
       console.error('no:' + err)
@@ -63,8 +105,12 @@ function dealUsr (app) {
   app.route('/usr/register')
      .post(function (req, res) {
        res.setHeader('Content-Type', 'text/plain')
-       console.log(req.body)
        usrUtil.addNewUsr(req.body, res)
+     })
+  app.route('/usr/login')
+     .post(function (req, res) {
+       res.setHeader('Content-Type', 'text/plain')
+       usrUtil.authUsr(req.body, res)
      })
 }
 

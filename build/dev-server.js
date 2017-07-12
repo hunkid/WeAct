@@ -91,6 +91,8 @@ var server = app.listen(port)
 var appServer = require('../server/activity')
 var usrServer = require('../server/usr').dealUsr
 
+app.set('jwtTokenSecret', 'WeAct')
+
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
 

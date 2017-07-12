@@ -4,6 +4,8 @@ import Vue from 'vue'
 import App from './App'
 import router from './router'
 
+import Vuex from 'vuex'
+
 // 引入Element-ui
 import ElementUi from 'element-ui'
 import 'element-ui/lib/theme-default/index.css'
@@ -18,6 +20,7 @@ Vue.config.productionTip = false
 
 Vue.use(ElementUi)
 Vue.use(VueResource)
+Vue.use(Vuex)
 
 /* eslint-disable no-new */
 new Vue({
