@@ -7,6 +7,7 @@
 var fData = require('./data')
 var mongoose = require('mongoose')
 var option = require('./db/db')
+var tokenMaker = require('./token').tokenMaker
 
 var UsrsSchema = new mongoose.Schema({
   name: String,
@@ -67,7 +68,7 @@ var usrUtil = {
       })
     }).catch(function (err) {
       console.error('no:' + err)
-      res.end(fData('操作失败', false))
+      res.end(fData({msg: '操作失败'}, false))
     })
   },
   authUsr (data, res) {
@@ -79,18 +80,24 @@ var usrUtil = {
       }, function (err, doc) {
         if (err) {
           console.error(err)
-          res.end(fData('操作失败', false))
+          res.end(fData({msg: '操作失败'}, false))
           db.close()
           return
         }
         if (!doc.length) {
-          res.end(fData('登录失败，用户名或密码不正确', false))
+          res.end(fData({msg: '登录失败，用户名或密码不正确'}, false))
           return
         }
         if (doc[0].passwd === data.password) {
-          res.end(fData('登录成功', true))
+          let token = tokenMaker(data, 1)
+          let newData = {
+            token,
+            msg: '登录成功'
+          }
+          res.send(fData(newData, true))
+          res.end()
         } else {
-          res.end(fData('登录失败，用户名或密码不正确', false))
+          res.end(fData({msg: '登录失败，用户名或密码不正确'}, false))
         }
         db.close()
         return

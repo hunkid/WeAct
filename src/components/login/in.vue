@@ -76,15 +76,17 @@
 </template>
 
 <script>
+import {mapActions} from 'vuex'
+import {USR_SIGNIN, USR_SIGNOUT} from '@/store'
 export default {
-  data () {
+  data () { // TODO: 重定向
     return {
-      user: {
+      user: { // 注册信息
         name: '',
         nickname: '',
         password: ''
       },
-      login: {
+      login: { // 登录信息
         name: '',
         password: ''
       },
@@ -92,21 +94,31 @@ export default {
     }
   },
   methods: {
+    ...mapActions([USR_SIGNIN, USR_SIGNOUT]),
     doLogin () {
       if (this.login.name && this.login.password) {
         this.$http.post('/usr/login', this.login).then(function (res) {
           if (res.body.status === 1) {
-            alert('登录成功') // TODO:应该有跳转的
+            alert('登录成功')
+            var sd = {}
+            sd.usr = this.login.name
+            sd.token = res.body.data.token
+            this.USR_SIGNIN(sd)
+            this.$router.push({
+              name: 'home',
+              params: {username: this.login.name}
+            })
           } else {
-            alert(res.body.data)
+            alert(res.body.data.msg)
           }
         }).catch(res => {
+          alert('这里')
+          console.log(res)
           alert('登录失败')
         })
       }
     },
     change (loginway) {
-      // this.$store.dispatch('changeLoginway', loginway)
       if (loginway === 'login') {
         this.isLogin = true
       } else {
@@ -124,7 +136,7 @@ export default {
         if (res.body.status === 1) {
           alert('注册成功') // 应该有跳转的
         } else {
-          alert(res.body.data)
+          alert(res.body.data.msg)
         }
       }).catch(res => {
         alert('注册失败')

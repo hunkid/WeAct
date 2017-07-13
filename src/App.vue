@@ -3,7 +3,7 @@
     <header id="header">
       <span class="title">我的主页</span>
       <div class="logout userAction">
-        <a href="javascript:;">退出</a>
+        <a href="javascript:;" @click="logout">退出</a>
       </div>
     </header>
     <el-col id="sidebar">
@@ -23,8 +23,22 @@
 </template>
 
 <script>
+import {mapActions} from 'vuex'
+import {USR_SIGNIN, USR_SIGNOUT} from '@/store'
 export default {
-  name: 'app'
+  name: 'app',
+  data () {
+    return {}
+  },
+  methods: {
+    ...mapActions([USR_SIGNIN, USR_SIGNOUT]),
+    logout () {
+      this.USR_SIGNOUT()
+      this.$router.push({
+        name: 'login'
+      })
+    }
+  }
 }
 </script>
 

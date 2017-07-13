@@ -2,7 +2,7 @@ import Vue from 'vue'
 import Router from 'vue-router'
 // import Hello from '@/components/Hello'
 
-import userHome from '@/components/user/userHome'
+// import userHome from '@/components/user/userHome'
 
 import acting from '@/components/activity/acting'
 import draft from '@/components/activity/draft'
@@ -13,37 +13,48 @@ import loginOrRegist from '@/components/login/in'
 
 Vue.use(Router)
 
-export default new Router({
+const router = new Router({
   routes: [
     {
       path: '/',
-      name: 'acting',
-      component: acting
+      name: 'home',
+      // redirect: {name: 'userHome', usrname: store.state.usr},
+      component: acting,
+      meta: {
+        requiresAuth: true
+      }
     },
     {
-      path: '/user',
+      path: '/act/home',
       name: 'userHome',
-      component: userHome
-    },
-    {
-      path: '/act/doing',
-      name: 'acting',
-      component: acting
+      component: acting,
+      meta: {
+        requiresAuth: true
+      }
     },
     {
       path: '/act/draft',
       name: 'draft',
-      component: draft
+      component: draft,
+      meta: {
+        requiresAuth: true
+      }
     },
     {
       path: '/act/garbage',
       name: 'garbage',
-      component: garbage
+      component: garbage,
+      meta: {
+        requiresAuth: true
+      }
     },
     {
       path: '/act/new',
       name: 'newAct',
-      component: newAct
+      component: newAct,
+      meta: {
+        requiresAuth: true
+      }
     },
     {
       path: '/usr/login',
@@ -51,9 +62,25 @@ export default new Router({
       component: loginOrRegist // TODO: 需要用鉴权
     },
     {
-      path: '/usr/login',
+      path: '/usr/registe',
       name: 'register',
       component: loginOrRegist // TODO: 需要用鉴权
     }
   ]
 })
+
+router.beforeEach((to, from, next) => {
+  if (to.matched.some(record => record.meta.requiresAuth)) {
+    if (localStorage.usr && localStorage.token) {
+      next()
+    } else {
+      next({
+        path: '/usr/login'
+      })
+    }
+  } else {
+    next()
+  }
+})
+
+export default router
