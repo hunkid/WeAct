@@ -43,7 +43,7 @@
     </el-form-item>
     <el-form-item id="fromActBTG">
       <el-button type="primary" @click="onSubmit('actform')">立即创建</el-button>
-      <el-button>取消</el-button>
+      <el-button @click="cancel">取消</el-button>
     </el-form-item>
   </el-form>
 </template>
@@ -99,7 +99,7 @@ export default {
       this.$refs[formName].validate((valid) => {
         if (valid) {
           let formData = JSON.stringify(this.actform)
-          this.$http.post('/usr/acts', formData).then(
+          this.$http.post('/usr/acts/add', formData).then(
             res => {
               if (res.body.status === 1) {
                 alert('新增成功') // TODO: 可以用弹出框，以后再说；另外跳转页面
@@ -118,7 +118,7 @@ export default {
           return false
         }
       })
-    }
+    },
     // formValidate (formName) {
     //   this.$refs[formName].validate((valid) => {
     //     if (valid) {
@@ -129,6 +129,9 @@ export default {
     //     }
     //   })
     // }
+    cancel () {
+      this.$router.go(-1)
+    }
   }
 }
 </script>

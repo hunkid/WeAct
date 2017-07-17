@@ -13,7 +13,7 @@
         <template scope="scope">
           <el-button-group>
           <el-button type="primary">查看</el-button>
-          <el-button type="primary">编辑<i class="el-icon-edit"></i></el-button>
+          <el-button type="primary">发布<i class="el-icon-edit"></i></el-button>
           <el-button type="primary">删除<i class="el-icon-close"></i></el-button>
           </el-button-group>
         </template>

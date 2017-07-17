@@ -8,8 +8,8 @@
     </header>
     <el-col id="sidebar">
       <span class="sidebar-title">我的活动</span>
-      <el-menu default-active="/act/doing" class="el-menu-vertical-demo" theme="light" router="router">
-        <el-menu-item index="/act/doing">进行中</el-menu-item>
+      <el-menu default-active="/act/home" class="el-menu-vertical-demo" theme="light" router="router">
+        <el-menu-item index="/act/home">进行中</el-menu-item>
         <el-menu-item index="/act/draft">草稿箱</el-menu-item>
         <el-menu-item index="/act/garbage">垃圾箱</el-menu-item>
       </el-menu>

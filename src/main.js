@@ -36,6 +36,7 @@ Vue.http.interceptors.push(function (request, next) {
   // continue to next interceptor
   next((response) => {
     if (response.status === 400 || response.status === 401) {
+      console.log('拦截执行消除localstorage一次')
       localStorage.removeItem('token')
       localStorage.removeItem('usr')
     }

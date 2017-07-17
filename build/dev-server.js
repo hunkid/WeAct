@@ -91,11 +91,11 @@ var server = app.listen(port)
 var appServer = require('../server/activity')
 var usrServer = require('../server/usr').dealUsr
 
-var authToken = require('../server/token').authToken
+// var authToken = require('../server/token').authToken
 
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
-app.use(authToken)
+// app.use(authToken)
 
 appServer(app)
 usrServer(app)

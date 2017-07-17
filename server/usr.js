@@ -10,12 +10,12 @@ var option = require('./db/db')
 var tokenMaker = require('./token').tokenMaker
 
 var UsrsSchema = new mongoose.Schema({
-  name: String,
+  name: {type: String, required: true, unique: true},
+  passwd: {type: String, required: true},
   tel: String, // 电话号码
   gender: String, // 性别
   corp: String, // 公司
-  nickname: String, // 昵称
-  passwd: String
+  nickname: String // 昵称
 })
 
 var db

@@ -26,15 +26,19 @@ function tokenMaker (usr, time) {
  */
 function authToken (req, res, next) {
   var token = (req.body && req.body.access_token) || (req.query && req.query.access_token) || req.headers['x-access-token']
+  console.log('token:\n' + token)
   if (token) {
     try {
-      var decoded = jwt.decode(token, jwtTokenSecret)
+      var decoded = jwt.decode(token, jwtTokenSecret, true)
       if (decoded.exp <= Date.now()) {
-        res.end('Access token has expired', 400)
+        res.status(400).end('Access token has expired')
+        return
       }
     } catch (err) {
       return next()
     }
+    req.usr = decoded.iss
+    next()
   } else {
     next()
   }
