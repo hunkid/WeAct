@@ -3,13 +3,13 @@
     <header id="header">
       <span class="title">我的主页</span>
       <div class="logout userAction">
-        <a href="javascript:;">退出</a>
+        <a href="javascript:;" @click="logout">退出</a>
       </div>
     </header>
     <el-col id="sidebar">
       <span class="sidebar-title">我的活动</span>
-      <el-menu default-active="/act/doing" class="el-menu-vertical-demo" theme="light" router="router">
-        <el-menu-item index="/act/doing">进行中</el-menu-item>
+      <el-menu default-active="/act/home" class="el-menu-vertical-demo" theme="light" router="router">
+        <el-menu-item index="/act/home">进行中</el-menu-item>
         <el-menu-item index="/act/draft">草稿箱</el-menu-item>
         <el-menu-item index="/act/garbage">垃圾箱</el-menu-item>
       </el-menu>
@@ -23,8 +23,22 @@
 </template>
 
 <script>
+import {mapActions} from 'vuex'
+import {USR_SIGNIN, USR_SIGNOUT} from '@/store'
 export default {
-  name: 'app'
+  name: 'app',
+  data () {
+    return {}
+  },
+  methods: {
+    ...mapActions([USR_SIGNIN, USR_SIGNOUT]),
+    logout () {
+      this.USR_SIGNOUT()
+      this.$router.push({
+        name: 'login'
+      })
+    }
+  }
 }
 </script>
 

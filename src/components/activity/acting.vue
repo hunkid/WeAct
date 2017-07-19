@@ -43,6 +43,11 @@ export default {
       ]
     }
   },
+  beforeCreate () {
+    this.$http.get('/usr/acts?state=1').then(function (res) {
+      console.log(res)
+    })
+  },
   components: {
     newActBtn
   }
