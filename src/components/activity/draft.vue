@@ -28,19 +28,22 @@ import newActBtn from './newActBtn'
 export default {
   data () {
     return {
-      draftActs: [
-        {
-          serial: 1,
-          name: '夏季热销活动来啦！',
-          date: '2017-5-1'
-        },
-        {
-          serial: 2,
-          name: '夏季热销活动走啦！',
-          date: '2017-5-2'
-        }
-      ]
+      draftActs: []
     }
+  },
+  beforeCreate () {
+    this.$http.get('/usr/acts?state=0').then(function (res) {
+      res.body.data.forEach((ele, ind) => {
+        this.draftActs.push(
+          {
+            serial: ind + 1,
+            name: ele.name,
+            date: ele.estabDate.split('T')[0],
+            id: ele._id
+          }
+        )
+      })
+    })
   },
   components: {
     newActBtn

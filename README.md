@@ -1,6 +1,6 @@
 # WeAct
 
-> A Vue.js project
+> A Vue.js project: WeAct
 
 ## Build Setup
 
@@ -24,4 +24,8 @@ npm run unit
 npm test
 ```
 
-For detailed explanation on how things work, checkout the [guide](http://vuejs-templates.github.io/webpack/) and [docs for vue-loader](http://vuejs.github.io/vue-loader).
+## 完成项
+
+- 技术栈：Vue；Node;MongoDB
+- 实现：登录；新建活动；
+- 待实现： 查看活动，分享自己活动，查看并参与活动

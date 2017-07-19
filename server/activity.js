@@ -7,7 +7,7 @@
 var fData = require('./data')
 var option = require('./db/db')
 var mongoose = require('mongoose')
-
+var URL = require('url')
 // var UsrsSchema = require('./usr').UsrsSchema
 
 var authToken = require('./token').authToken
@@ -113,20 +113,32 @@ var activityUtil = {
     })
   },
   // 根据活动状态来查找
-  getActivityByState (state, usrname) {
+  getActivityByState (state, usrname, res) {
     var promise = this.init()
     var ActsDB = mongoose.model('activities', ActsSchema)
     promise.then(function () {
       ActsDB.find({
-        name: usrname,
+        usr: usrname,
         state: state
       }, function (err, doc) {
         if (err) {
           console.error(err)
+          res.end(fData('no', false))
           return
         }
         if (doc.length) {
-          console.log(doc)
+          var m = []
+          var tmp
+          doc.forEach(function (ele) {
+            tmp = Object.create(null)
+            tmp._id = ele._id
+            tmp.name = ele.name
+            tmp.estabDate = ele.estabDate
+            m.push(tmp)
+          })
+          res.end(fData(m, true))
+        } else {
+          res.end(fData(null, true))
         }
       })
     })
@@ -139,7 +151,13 @@ var activityUtil = {
 module.exports = function (app) {
   app.route('/usr/acts/add')
      .post(authToken, function (req, res) {
-       res.setHeader('Content-Type', 'text/plain')
+       res.setHeader('Content-Type', 'text/plain;charset=utf-8')
        activityUtil.addNewActivityDB(req, res)
+     })
+  app.route('/usr/acts')
+     .get(authToken, function (req, res) {
+       var arg = URL.parse(req.url, true).query
+       res.setHeader('Content-Type', 'text/plain;charset=utf-8')
+       activityUtil.getActivityByState(arg.state, req.usr, res)
      })
 }
